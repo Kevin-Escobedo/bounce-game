@@ -112,12 +112,31 @@ def change_speed(score, obstacle):
     if score <= 15:
         obstacle.velocity = [7,7]
 
+def writeHighScore(fileName: str, score: int) -> None:
+    '''Writes a score to the file'''
+    file = open(fileName, "w")
+    file.write(str(score))
+    file.close()
+
+def readHighScore(fileName: str) -> int:
+    '''Reads the previous high score from a file'''
+    try:
+        file = open(fileName, "r")
+        data = int(file.read())
+        file.close()
+
+    except FileNotFoundError:
+        return 0
+
+    return data
+
 
 def main():
 
     obstacle_lst = []
     score = 0
-    score_lst = []
+    score_lst = [readHighScore(".highScore.txt")]
+    highestScore = max(score_lst)
 
     all_sprites = pygame.sprite.Group()
     ship = Ship()
@@ -141,13 +160,15 @@ def main():
 
                 obstacle_lst.append(obstacle)
                 score += 1
-
+                
         WIN.blit(SPACE_BACKGROUND,(0,0))
 
         for item in obstacle_lst:
             item.move(bounce)
             item.draw(WIN)
             if ship.rect.colliderect(item.rect):
+                if score > highestScore:
+                    writeHighScore(".highScore.txt", score)
                 score_lst.append(score)
                 obstacle_lst.clear()
                 draw_winner('Score: '+ str(score))
@@ -156,12 +177,8 @@ def main():
 
         ship.draw(WIN)
         ship.handle_keys()
-
-        if len(score_lst) > 0:
-            draw_highscore('Highscore: ' + str(max(score_lst)))
-        else:
-            draw_highscore('Highscore: 0 ')
-
+        
+        draw_highscore('Highscore: ' + str(max(score_lst)))
         draw_current_score('Current Score: ' + str(score))
 
         pygame.display.update()
