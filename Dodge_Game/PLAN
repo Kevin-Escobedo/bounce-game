@@ -1,0 +1,22 @@
+HOW THE GAME WORKS
+
+ - simple game where you control a ship
+ - obstacles are generated at random points on the screen with 2s warning (sprite?)
+ - obstacles move at a given speed , let's say 1st obstacle moves at speed 1
+ - if obstacles hit border of screen then they get bounced off.
+ - after 4? bounces the obstacle disappears
+ - an obstacle is generated every 5? seconds at a random point. For nth obstacle,
+   the obstacle moves at speed n.
+ - score = no. of obstacles vanished
+ - if the ship touches the obstacles, game over - score is shown and restarted.
+ - high score is kept track of
+
+
+POTENTIAL FOR IMPROVEMENTS
+
+ - obstacle generation can be an animated sprite/different projectile
+ - if you hit e.g. level 5, then ship is upgraded to a bigger one
+ - change background upon level up
+ - ensure obstacle generation is ?? distance away from ship
+ - randomize angle/trajectory of each obstacle
+ - add more health to the spaceship and keep track of health
